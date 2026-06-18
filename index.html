@@ -7,366 +7,423 @@
   <meta name="description" content="Taxi conventionné CPAM pour vos trajets médicaux en Île-de-France. Ponctuel, discret, confortable. Disponible 7j/7."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
 
     /* ── TOKENS ── */
     :root {
-      --navy:   #273961;
-      --navy-d: #111d38;
-      --navy-l: #1e3a6e;
-      --gold:   #c9a84c;
-      --gold-l: #e2be6c;
-      --white:  #ffffff;
-      --off:    #f4f6fa;
-      --gray:   #6b7280;
-      --border: #dde3ed;
-      --r: 10px;
+      --navy:    #1B2E58;   /* hero / dark sections */
+      --navy-m:  #273961;   /* cards, footer */
+      --navy-d:  #0f1d3a;   /* footer bg */
+      --olive:   #8B9A6D;   /* CTA buttons */
+      --olive-h: #7a8860;
+      --white:   #ffffff;
+      --off:     #F7F8FA;
+      --gray:    #6B7280;
+      --gray-l:  #9CA3AF;
+      --border:  #E5E7EB;
+      --text:    #1F2937;
     }
 
-    /* ── UTILS ── */
-    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-    .sec  { padding: 80px 0; }
-    .sec-alt  { background: var(--off); }
-    .sec-dark { background: var(--navy); color: #fff; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
 
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(201,168,76,.14); border: 1px solid rgba(201,168,76,.35);
-      color: var(--gold); font-size: .75rem; font-weight: 600;
-      letter-spacing: .07em; text-transform: uppercase;
-      padding: 5px 13px; border-radius: 100px; margin-bottom: 16px;
-    }
-
-    h2.sec-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      line-height: 1.2; color: var(--navy-d);
-    }
-    .sec-dark h2.sec-title { color: #fff; }
-
+    /* ── BUTTONS ── */
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 26px; border-radius: 8px;
-      font-weight: 600; font-size: .9rem; cursor: pointer;
-      border: none; transition: all .2s; white-space: nowrap;
+      padding: 13px 24px; border-radius: 8px; font-weight: 600;
+      font-size: .9rem; cursor: pointer; border: none;
+      transition: all .2s; font-family: inherit;
     }
-    .btn-gold    { background: var(--gold); color: var(--navy-d); }
-    .btn-gold:hover { background: var(--gold-l); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(201,168,76,.3); }
-    .btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
-    .btn-outline:hover { background: #fff; color: var(--navy-d); }
-    .btn-navy { background: var(--navy); color: #fff; }
-    .btn-navy:hover { background: var(--navy-l); }
+    .btn-olive  { background: var(--olive); color: #fff; }
+    .btn-olive:hover  { background: var(--olive-h); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(139,154,109,.35); }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,.6); color: #fff; }
+    .btn-outline:hover { background: rgba(255,255,255,.1); }
+    .btn-outline-dark { background: transparent; border: 1.5px solid var(--olive); color: var(--olive); }
+    .btn-outline-dark:hover { background: var(--olive); color: #fff; }
 
-    /* ── NAV ── */
+    /* ── LABELS ── */
+    .label {
+      display: inline-block; font-size: .75rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--olive); margin-bottom: 14px;
+    }
+    .label-pill {
+      display: inline-block; padding: 5px 14px; border-radius: 100px;
+      background: rgba(139,154,109,.12); border: 1px solid rgba(139,154,109,.3);
+      font-size: .73rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--olive); margin-bottom: 16px;
+    }
+    .label-pill-dark {
+      display: inline-block; padding: 5px 16px; border-radius: 100px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+      font-size: .73rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: rgba(255,255,255,.85); margin-bottom: 16px;
+    }
+
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; line-height: 1.2; color: var(--text); letter-spacing: -.02em; }
+
+    /* ══════════════════════════════════
+       NAV
+    ══════════════════════════════════ */
     #nav {
       position: fixed; top: 0; width: 100%; z-index: 999;
-      background: rgba(17,29,56,.96); backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(201,168,76,.18);
+      background: rgba(27,46,88,.97); backdrop-filter: blur(16px);
     }
     .nav-in {
       display: flex; align-items: center; justify-content: space-between;
-      height: 66px; max-width: 1140px; margin: 0 auto; padding: 0 28px;
+      height: 64px; max-width: 1120px; margin: 0 auto; padding: 0 32px;
     }
-    .logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: #fff; font-weight: 700; letter-spacing: .03em; }
-    .logo span { color: var(--gold); }
+    /* Logo */
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo .logo-icon svg { display: block; }
+    .nav-logo .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo .logo-name { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: .08em; }
+    .nav-logo .logo-sub  { font-size: .58rem; font-weight: 500; color: rgba(255,255,255,.55); letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,.78); font-size: .85rem; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-tel { background: var(--gold); color: var(--navy-d); padding: 9px 18px; border-radius: 7px; font-weight: 700; font-size: .85rem; }
-    .nav-tel:hover { background: var(--gold-l); }
+    .nav-links a { color: rgba(255,255,255,.75); font-size: .85rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--olive); color: #fff; padding: 9px 16px;
+      border-radius: 7px; font-weight: 600; font-size: .85rem; white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--olive-h); }
     .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .burger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
 
-    /* ── HERO ── */
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
     #accueil {
-      min-height: 100vh; padding-top: 66px;
-      background: linear-gradient(140deg, #111d38 0%, #1e3060 55%, #0f2d5a 100%);
-      display: flex; align-items: center; position: relative; overflow: hidden;
+      background: var(--navy);
+      min-height: 100vh; padding-top: 64px;
+      display: flex; align-items: center;
     }
-    #accueil::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(201,168,76,.07) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,.04) 0%, transparent 60%);
-    }
-    .hero-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
-      align-items: center; padding: 80px 0; position: relative; z-index: 1;
-    }
-    .hero-cpam {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.38);
-      color: var(--gold); padding: 7px 15px; border-radius: 100px;
-      font-size: .78rem; font-weight: 700; letter-spacing: .06em; margin-bottom: 22px;
-    }
-    .hero-cpam::before { content: '✓'; }
-    .hero-h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: #fff; line-height: 1.18; margin-bottom: 18px;
-    }
-    .hero-h1 em { color: var(--gold); font-style: normal; }
-    .hero-p { color: rgba(255,255,255,.72); font-size: 1rem; max-width: 460px; margin-bottom: 32px; }
-    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
-    .hero-trust {
-      display: flex; gap: 0; margin-top: 40px;
-      border-top: 1px solid rgba(255,255,255,.1); padding-top: 28px;
-    }
-    .trust-item {
-      display: flex; align-items: center; gap: 9px;
-      flex: 1; padding: 0 20px 0 0;
-    }
-    .trust-item:not(:first-child) { padding-left: 20px; border-left: 1px solid rgba(255,255,255,.1); }
-    .trust-icon { font-size: 1.4rem; }
-    .trust-txt { font-size: .78rem; color: rgba(255,255,255,.75); font-weight: 500; line-height: 1.3; }
+    .hero-wrap { padding: 72px 32px; max-width: 1120px; margin: 0 auto; width: 100%; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
-    /* Hero right – photo card */
+    /* Left */
+    .hero-cpam-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.9); padding: 6px 14px; border-radius: 100px;
+      font-size: .75rem; font-weight: 500; letter-spacing: .03em; margin-bottom: 24px;
+    }
+    .hero-cpam-badge::before { content: '○'; font-size: .6rem; }
+    .hero-h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -.02em; margin-bottom: 20px; }
+    .hero-p { color: rgba(255,255,255,.68); font-size: .97rem; line-height: 1.65; margin-bottom: 32px; max-width: 420px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+
+    /* 3 trust items at bottom */
+    .hero-trust { display: flex; gap: 32px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.1); }
+    .h-trust-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+    .h-trust-ico { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; }
+    .h-trust-txt { font-size: .78rem; color: rgba(255,255,255,.65); text-align: center; line-height: 1.3; }
+
+    /* Right – photo */
     .hero-right { position: relative; }
-    .hero-img-wrap {
-      border-radius: 20px; overflow: hidden; position: relative;
-      box-shadow: 0 32px 80px rgba(0,0,0,.4);
-      aspect-ratio: 4/3;
+    .hero-photo {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.4);
+      aspect-ratio: 4/3; background: #0d1e3e;
     }
-    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-stat-pill {
-      position: absolute; bottom: -18px; left: 28px;
-      background: var(--gold); color: var(--navy-d);
-      padding: 14px 24px; border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(201,168,76,.4);
-      display: flex; align-items: center; gap: 12px;
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-exp-badge {
+      position: absolute; bottom: -16px; left: 24px;
+      background: #fff; border-radius: 12px;
+      padding: 16px 22px; box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      display: flex; flex-direction: column; gap: 2px;
     }
-    .stat-big { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1; }
-    .stat-lbl { font-size: .75rem; font-weight: 600; line-height: 1.3; }
+    .exp-num { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -.03em; }
+    .exp-lbl { font-size: .72rem; color: var(--gray); font-weight: 500; }
 
-    /* ── TRUST STRIP ── */
-    .strip { background: var(--gold); padding: 22px 0; }
-    .strip-in { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
-    .s-item { display: flex; align-items: center; gap: 9px; color: var(--navy-d); font-weight: 600; font-size: .88rem; }
-    .s-item .ico { font-size: 1.25rem; }
+    /* ══════════════════════════════════
+       PRÉSENTATION
+    ══════════════════════════════════ */
+    #presentation { padding: 100px 0 80px; }
+    .pres-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .pres-photo { border-radius: 16px; overflow: hidden; }
+    .pres-photo img { width: 100%; height: 480px; object-fit: cover; border-radius: 16px; }
 
-    /* ── PRESENTATION ── */
-    .pres-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .pres-photo { border-radius: 16px; overflow: hidden; position: relative; }
-    .pres-photo img { width: 100%; height: 460px; object-fit: cover; border-radius: 16px; }
-    .pres-stats {
-      display: flex; gap: 0;
-      margin-top: 20px; background: var(--navy); border-radius: 12px; overflow: hidden;
+    /* Stats row below photo */
+    .pres-stats { display: flex; justify-content: space-around; margin-top: 20px; padding: 20px 0; border-top: 1px solid var(--border); }
+    .pstat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .pstat-ico { color: var(--olive); margin-bottom: 4px; }
+    .pstat-num { font-size: 1.6rem; font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+    .pstat-lbl { font-size: .72rem; color: var(--gray); text-transform: uppercase; letter-spacing: .05em; }
+
+    .pres-text { padding-top: 4px; }
+    .pres-text h2 { margin-bottom: 16px; }
+    .pres-text > p { color: var(--gray); font-size: .93rem; line-height: 1.7; margin-bottom: 10px; }
+
+    .check-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+    .check-item { display: flex; gap: 12px; align-items: flex-start; }
+    .check-ico {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--navy-m);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
     }
-    .pres-stat { flex: 1; padding: 20px 16px; text-align: center; border-right: 1px solid rgba(255,255,255,.1); }
-    .pres-stat:last-child { border-right: none; }
-    .pres-stat .num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); font-weight: 700; }
-    .pres-stat .lbl { font-size: .73rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .05em; margin-top: 3px; }
+    .check-ico svg { display: block; }
+    .check-body h4 { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .check-body p  { font-size: .83rem; color: var(--gray); }
 
-    .pres-text { padding-left: 8px; }
-    .pres-text > p { color: var(--gray); font-size: .95rem; margin: 12px 0 28px; }
-    .feat-list { display: flex; flex-direction: column; gap: 22px; }
-    .feat-item { display: flex; gap: 14px; align-items: flex-start; }
-    .feat-icon {
-      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
-      background: rgba(39,57,97,.08); display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
-    }
-    .feat-body h4 { font-weight: 600; font-size: .95rem; color: var(--navy-d); margin-bottom: 3px; }
-    .feat-body p  { color: var(--gray); font-size: .85rem; }
+    /* ══════════════════════════════════
+       SERVICES
+    ══════════════════════════════════ */
+    #services { padding: 80px 0; background: var(--off); }
+    .sec-head { text-align: center; max-width: 540px; margin: 0 auto 48px; }
+    .sec-head h2 { margin-bottom: 10px; }
+    .sec-head p  { color: var(--gray); font-size: .93rem; }
 
-    /* ── SERVICES ── */
-    .sec-head { text-align: center; max-width: 580px; margin: 0 auto 44px; }
-    .sec-head .sec-sub { color: var(--gray); margin-top: 10px; font-size: .95rem; }
-
-    .srv-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .srv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .srv-card {
-      background: #fff; border: 1px solid var(--border); border-radius: var(--r);
-      padding: 26px 24px; transition: all .22s;
+      background: #fff; border: 1px solid var(--border); border-radius: 12px;
+      padding: 32px 28px; transition: box-shadow .2s, transform .2s;
     }
-    .sec-alt .srv-card { background: #fff; }
-    .srv-card:hover { border-color: var(--gold); box-shadow: 0 6px 28px rgba(201,168,76,.14); transform: translateY(-3px); }
-    .srv-ico {
-      width: 46px; height: 46px; border-radius: 10px;
-      background: rgba(39,57,97,.08); display: flex; align-items: center;
-      justify-content: center; font-size: 1.3rem; margin-bottom: 14px;
+    .srv-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.08); transform: translateY(-2px); }
+    .srv-icon {
+      width: 52px; height: 52px; border-radius: 12px; background: var(--navy-m);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
     }
-    .srv-card h3 { font-size: 1rem; font-weight: 600; color: var(--navy-d); margin-bottom: 7px; }
-    .srv-card p  { color: var(--gray); font-size: .85rem; line-height: 1.55; }
+    .srv-card h3 { font-size: .97rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .srv-card p  { font-size: .85rem; color: var(--gray); line-height: 1.6; text-align: center; }
+
+    /* Center text in cards */
+    .srv-card { text-align: center; }
+    .srv-icon { margin-left: auto; margin-right: auto; }
 
     .srv-banner {
-      margin-top: 36px; background: var(--navy-d); border-radius: var(--r);
-      padding: 30px 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+      margin-top: 24px; background: var(--navy); border-radius: 12px;
+      padding: 40px 36px; text-align: center;
     }
-    .srv-banner h3 { color: #fff; font-size: 1.2rem; margin-bottom: 5px; }
-    .srv-banner p  { color: rgba(255,255,255,.65); font-size: .88rem; }
+    .srv-banner h3 { color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+    .srv-banner p  { color: rgba(255,255,255,.65); font-size: .9rem; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
 
-    /* ── VEHICLE ── */
-    .veh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .veh-feats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
-    .veh-feat { display: flex; align-items: center; gap: 11px; }
-    .veh-feat .ico { width: 38px; height: 38px; border-radius: 8px; background: rgba(39,57,97,.08); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-    .veh-feat span { font-size: .85rem; font-weight: 500; color: var(--navy-d); }
-    .veh-specs { margin-top: 32px; }
-    .veh-specs h3 { font-size: 1rem; font-weight: 600; color: var(--navy-d); margin-bottom: 14px; }
-    .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-    .spec { display: flex; gap: 8px; align-items: center; font-size: .85rem; color: var(--gray); }
-    .spec::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    /* ══════════════════════════════════
+       VÉHICULE
+    ══════════════════════════════════ */
+    #vehicule { padding: 80px 0; }
+    #vehicule .sec-head { margin-bottom: 36px; }
 
-    .veh-photo { border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,.12); }
-    .veh-photo img { width: 100%; height: 440px; object-fit: cover; }
-    .veh-overlay {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(17,29,56,.88));
-      padding: 32px 24px 24px;
+    .veh-photo { border-radius: 16px; overflow: hidden; background: #e5e7eb; margin-bottom: 24px; }
+    .veh-photo img { width: 100%; height: 380px; object-fit: cover; }
+
+    .veh-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+    .veh-card {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px;
     }
-    .veh-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .veh-pill {
-      background: rgba(201,168,76,.2); border: 1px solid rgba(201,168,76,.45);
-      color: var(--gold); padding: 5px 13px; border-radius: 100px; font-size: .75rem; font-weight: 600;
+    .veh-card-ico {
+      width: 42px; height: 42px; border-radius: 9px; background: var(--navy-m);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .veh-card h4 { font-size: .88rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .veh-card p  { font-size: .78rem; color: var(--gray); }
 
-    /* ── RESERVATION ── */
-    .resa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
-    .resa-left { padding-top: 8px; }
-    .resa-left .sec-sub { color: rgba(255,255,255,.68); margin: 10px 0 30px; font-size: .95rem; }
-    .tel-box {
-      display: flex; align-items: center; gap: 16px;
-      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
-      border-radius: 10px; padding: 18px 22px; margin-bottom: 30px;
+    .veh-specs-box { background: var(--off); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; }
+    .veh-specs-box h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 18px; text-align: center; }
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+    .spec-item { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--gray); }
+    .spec-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--olive); flex-shrink: 0; }
+
+    /* ══════════════════════════════════
+       RÉSERVATION
+    ══════════════════════════════════ */
+    #reservation { padding: 80px 0; background: var(--off); }
+    #reservation .sec-head { margin-bottom: 28px; }
+    #reservation .sec-head p { margin-bottom: 24px; }
+    .resa-tel-btn-wrap { text-align: center; margin-bottom: 40px; }
+
+    .form-card {
+      max-width: 680px; margin: 0 auto;
+      background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
     }
-    .tel-box .phone-ico { font-size: 1.8rem; }
-    .tel-box .lbl { font-size: .75rem; color: rgba(255,255,255,.55); letter-spacing: .05em; text-transform: uppercase; }
-    .tel-box .num  { font-size: 1.35rem; font-weight: 700; color: var(--gold); }
-    .resa-steps { display: flex; flex-direction: column; gap: 14px; }
-    .rstep { display: flex; gap: 13px; align-items: flex-start; }
-    .rstep-n { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: var(--navy-d); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
-    .rstep h4 { color: #fff; font-size: .92rem; margin-bottom: 3px; }
-    .rstep p  { color: rgba(255,255,255,.6); font-size: .82rem; }
-
-    /* Form card */
-    .form-card { background: #fff; border-radius: 16px; padding: 34px; box-shadow: 0 20px 60px rgba(0,0,0,.22); }
-    .fsec { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--gold); padding-bottom: 8px; border-bottom: 2px solid rgba(201,168,76,.22); margin-bottom: 14px; margin-top: 20px; }
-    .fsec:first-child { margin-top: 0; }
-    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-    .fg label { font-size: .8rem; font-weight: 500; color: var(--navy-d); }
+    .fsec-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 18px; margin-top: 24px;
+    }
+    .fsec-title:first-child { margin-top: 0; }
+    .fsec-num {
+      width: 26px; height: 26px; border-radius: 50%; background: var(--navy-m);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .fg label { font-size: .8rem; font-weight: 500; color: var(--text); }
+    .fg .field-wrap { position: relative; }
+    .fg .field-wrap .field-ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-l); font-size: .9rem; }
     .fg input, .fg textarea {
-      padding: 10px 13px; border: 1.5px solid var(--border); border-radius: 7px;
-      font-family: inherit; font-size: .88rem; color: #333;
-      transition: border-color .2s; outline: none; width: 100%;
+      width: 100%; padding: 11px 13px; border: 1.5px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: .88rem; color: var(--text);
+      outline: none; transition: border-color .2s; background: #fff;
     }
-    .fg input:focus, .fg textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,.1); }
-    .fg textarea { resize: vertical; min-height: 82px; }
+    .fg input.has-ico { padding-left: 36px; }
+    .fg input:focus, .fg textarea:focus { border-color: var(--navy-m); box-shadow: 0 0 0 3px rgba(39,57,97,.08); }
+    .fg textarea { resize: vertical; min-height: 88px; }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--gray-l); }
     .f-submit {
-      width: 100%; padding: 14px; background: var(--gold); color: var(--navy-d);
-      border: none; border-radius: 8px; font-weight: 700; font-size: .95rem;
-      cursor: pointer; margin-top: 6px; transition: all .2s; font-family: inherit;
+      width: 100%; padding: 15px; background: var(--olive); color: #fff;
+      border: none; border-radius: 9px; font-weight: 700; font-size: .95rem;
+      cursor: pointer; font-family: inherit; margin-top: 6px; transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .f-submit:hover { background: var(--gold-l); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(201,168,76,.3); }
-    .f-note { font-size: .73rem; color: var(--gray); margin-top: 9px; }
+    .f-submit:hover { background: var(--olive-h); transform: translateY(-1px); }
+    .f-note { font-size: .72rem; color: var(--gray-l); margin-top: 10px; text-align: center; }
 
-    /* ── DOCUMENTS ── */
-    .doc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 44px; }
-    .doc-card {
-      background: #fff; border: 1px solid var(--border); border-radius: var(--r); padding: 26px 24px;
+    /* ══════════════════════════════════
+       DOCUMENTS
+    ══════════════════════════════════ */
+    #documents { padding: 80px 0; }
+
+    /* Big prescription card */
+    .doc-main-card {
+      background: var(--navy-m); border-radius: 14px; padding: 32px 36px; margin-bottom: 20px;
+      color: #fff;
     }
-    .doc-ico { font-size: 2rem; margin-bottom: 12px; }
-    .doc-card h3 { font-size: .98rem; font-weight: 600; color: var(--navy-d); margin-bottom: 10px; }
-    .doc-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .doc-card ul li { display: flex; gap: 8px; align-items: flex-start; font-size: .84rem; color: var(--gray); }
-    .doc-card ul li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
-
-    .rates-box { background: var(--navy-d); border-radius: var(--r); padding: 34px 36px; margin-top: 36px; }
-    .rates-box h3 { color: #fff; font-size: 1.1rem; margin-bottom: 6px; }
-    .rates-box .sub { color: rgba(255,255,255,.65); font-size: .88rem; margin-bottom: 24px; }
-    .rates-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-    .rate-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 9px; padding: 20px; text-align: center; }
-    .rate-pct { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
-    .rate-lbl { font-size: .8rem; color: rgba(255,255,255,.65); margin-top: 5px; line-height: 1.4; }
-
-    .info-note {
-      background: rgba(201,168,76,.08); border-left: 4px solid var(--gold);
-      padding: 15px 18px; border-radius: 0 8px 8px 0; margin-top: 28px;
-      font-size: .85rem; color: var(--gray);
+    .doc-main-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .doc-main-ico {
+      width: 48px; height: 48px; border-radius: 10px; background: rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .info-note strong { color: var(--navy-d); }
-    .doc-cta { text-align: center; margin-top: 36px; background: var(--off); border-radius: var(--r); padding: 30px; }
-    .doc-cta p { color: var(--gray); margin-bottom: 16px; }
+    .doc-main-header h3 { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .doc-main-header p  { font-size: .82rem; color: rgba(255,255,255,.65); margin-top: 2px; }
+    .doc-checks { display: flex; flex-direction: column; gap: 12px; }
+    .doc-check { display: flex; align-items: flex-start; gap: 10px; font-size: .85rem; color: rgba(255,255,255,.82); }
+    .doc-check-ico {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.4);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
 
-    /* ── FOOTER ── */
-    footer { background: #0b1628; color: rgba(255,255,255,.78); }
-    .foot-main { padding: 56px 0 44px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    /* 2 small doc cards */
+    .doc-small-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .doc-small { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px 22px; }
+    .doc-small h4 { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .doc-small p  { font-size: .83rem; color: var(--gray); }
+
+    /* Bon à savoir */
+    .bon-savoir {
+      background: rgba(139,154,109,.08); border: 1px solid rgba(139,154,109,.25);
+      border-radius: 12px; padding: 22px 24px; margin-bottom: 24px;
+    }
+    .bon-savoir-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .bon-savoir-pill {
+      background: rgba(139,154,109,.18); color: var(--olive);
+      font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 100px;
+    }
+    .bon-savoir p { font-size: .83rem; color: var(--gray); line-height: 1.6; }
+
+    /* Taux de remboursement */
+    .taux-block { background: var(--off); border: 1px solid var(--border); border-radius: 12px; padding: 24px 26px; margin-bottom: 32px; }
+    .taux-block h4 { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .taux-list { display: flex; flex-direction: column; gap: 8px; }
+    .taux-item { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--gray); }
+    .taux-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--olive); flex-shrink: 0; }
+
+    .doc-cta { text-align: center; padding: 32px; background: var(--off); border-radius: 12px; }
+    .doc-cta p { color: var(--gray); font-size: .9rem; margin-bottom: 18px; }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer { background: var(--navy-d); color: rgba(255,255,255,.75); }
+    .foot-body { padding: 56px 0 40px; }
     .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
-    .foot-brand .flogo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; font-weight: 700; margin-bottom: 12px; }
-    .foot-brand .flogo span { color: var(--gold); }
-    .foot-brand > p { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.7; margin-bottom: 20px; }
-    .fcontact { display: flex; flex-direction: column; gap: 9px; }
-    .fcontact a { display: flex; align-items: center; gap: 9px; font-size: .85rem; color: rgba(255,255,255,.65); }
-    .fcontact a:hover { color: var(--gold); }
-    .fcontact a .ic { color: var(--gold); }
-    .foot-col h4 { color: #fff; font-size: .88rem; font-weight: 600; margin-bottom: 16px; letter-spacing: .03em; }
+
+    .foot-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .foot-logo .flogo-name { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: .07em; }
+    .foot-logo .flogo-sub  { font-size: .58rem; color: rgba(255,255,255,.45); letter-spacing: .06em; margin-top: 2px; }
+    .foot-brand > p { font-size: .84rem; color: rgba(255,255,255,.5); line-height: 1.7; margin-bottom: 18px; }
+
+    .foot-avail h5 { font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .05em; }
+    .foot-avail-items { display: flex; flex-direction: column; gap: 5px; }
+    .foot-avail-item { display: flex; align-items: center; gap: 7px; font-size: .8rem; color: rgba(255,255,255,.55); }
+    .avail-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    .foot-contact { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
+    .fcontact-item { display: flex; align-items: flex-start; gap: 9px; font-size: .82rem; color: rgba(255,255,255,.55); }
+    .fcontact-item a { color: rgba(255,255,255,.55); }
+    .fcontact-item a:hover { color: var(--olive); }
+
+    .foot-col h5 { font-size: .82rem; font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 14px; text-transform: uppercase; letter-spacing: .05em; }
     .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .foot-col ul li a { color: rgba(255,255,255,.55); font-size: .84rem; transition: color .2s; }
-    .foot-col ul li a:hover { color: var(--gold); }
-    .fbadge {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25);
-      border-radius: 7px; padding: 9px 13px; font-size: .8rem;
-      color: rgba(255,255,255,.78); margin-bottom: 8px;
-    }
+    .foot-col ul li a { font-size: .82rem; color: rgba(255,255,255,.5); transition: color .2s; }
+    .foot-col ul li a:hover { color: var(--olive); }
+
     .foot-bottom {
-      padding: 18px 0; text-align: center;
-      font-size: .78rem; color: rgba(255,255,255,.35);
+      border-top: 1px solid rgba(255,255,255,.06); padding: 18px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .77rem; color: rgba(255,255,255,.3); flex-wrap: wrap; gap: 8px;
     }
-    .foot-bottom a { color: rgba(255,255,255,.45); margin: 0 8px; }
-    .foot-bottom a:hover { color: var(--gold); }
+    .foot-bottom-links { display: flex; gap: 20px; }
+    .foot-bottom-links a { color: rgba(255,255,255,.35); }
+    .foot-bottom-links a:hover { color: var(--olive); }
 
     /* ── TOAST ── */
     #toast {
       position: fixed; bottom: 24px; left: 50%;
-      transform: translateX(-50%) translateY(120px);
-      background: var(--navy-d); color: #fff;
-      padding: 13px 26px; border-radius: 10px; font-size: .88rem;
-      font-weight: 500; z-index: 9999; border: 1px solid var(--gold);
+      transform: translateX(-50%) translateY(100px);
+      background: var(--navy); color: #fff; padding: 13px 26px;
+      border-radius: 10px; font-size: .88rem; font-weight: 500;
+      z-index: 9999; border: 1px solid var(--olive);
       transition: transform .4s cubic-bezier(.2,.8,.2,1); white-space: nowrap;
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
-      .hero-grid, .pres-grid, .veh-grid, .resa-grid { grid-template-columns: 1fr; gap: 40px; }
-      .srv-grid { grid-template-columns: repeat(2,1fr); }
-      .doc-grid { grid-template-columns: 1fr; }
-      .rates-row { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .hero-grid, .pres-grid { grid-template-columns: 1fr; gap: 40px; }
+      .srv-grid { grid-template-columns: 1fr; }
+      .veh-cards { grid-template-columns: 1fr; }
       .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
       .nav-links { display: none; }
       .burger { display: flex; }
       .nav-links.open {
-        display: flex; flex-direction: column;
-        position: absolute; top: 66px; left: 0; right: 0;
-        background: rgba(17,29,56,.98); padding: 16px 28px; gap: 14px;
-        border-top: 1px solid rgba(201,168,76,.18);
+        display: flex; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: var(--navy);
+        padding: 16px 32px; gap: 14px; border-top: 1px solid rgba(255,255,255,.08);
       }
     }
     @media (max-width: 600px) {
-      .srv-grid { grid-template-columns: 1fr; }
-      .foot-grid { grid-template-columns: 1fr; }
+      .wrap { padding: 0 16px; }
+      .hero-wrap { padding: 48px 16px; }
       .frow { grid-template-columns: 1fr; }
-      .veh-feats { grid-template-columns: 1fr; }
-      .specs { grid-template-columns: 1fr; }
-      .strip-in { gap: 18px; }
-      .hero-trust { flex-direction: column; gap: 14px; }
-      .trust-item { border-left: none !important; padding-left: 0 !important; }
-      .sec { padding: 56px 0; }
+      .doc-small-grid { grid-template-columns: 1fr; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .foot-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .form-card { padding: 24px 20px; }
+      h2 { font-size: 1.7rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- ══════════════════════
+     NAV
+══════════════════════ -->
 <nav id="nav">
   <div class="nav-in">
-    <a href="#accueil" class="logo">ITINIUM<span>.</span></a>
+    <!-- Logo -->
+    <a href="#accueil" class="nav-logo">
+      <span class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2L30 16L16 30L2 16L16 2Z" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+          <path d="M16 7L25 16L16 25L7 16L16 7Z" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+          <circle cx="16" cy="16" r="2.5" fill="rgba(255,255,255,0.85)"/>
+        </svg>
+      </span>
+      <span class="logo-text">
+        <span class="logo-name">ITINIUM</span>
+        <span class="logo-sub">Conventionnement CPAM</span>
+      </span>
+    </a>
     <ul class="nav-links" id="navlinks">
       <li><a href="#accueil">Accueil</a></li>
       <li><a href="#presentation">Présentation</a></li>
@@ -375,59 +432,63 @@
       <li><a href="#reservation">Réservation</a></li>
       <li><a href="#documents">Documents</a></li>
     </ul>
-    <a href="tel:0623899504" class="nav-tel">06 23 89 95 04</a>
+    <a href="tel:0623899504" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .34h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      06 23 89 95 04
+    </a>
     <button class="burger" id="burger" onclick="document.getElementById('navlinks').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- ══════════════════════
+     HERO
+══════════════════════ -->
 <section id="accueil">
-  <div class="wrap">
+  <div class="hero-wrap">
     <div class="hero-grid">
 
-      <!-- Left -->
       <div>
-        <div class="hero-cpam">Agréé CPAM Île-de-France</div>
-        <h1 class="hero-h1">
-          Votre taxi conventionné<br>
-          pour vos trajets médicaux<br>
-          <em>en toute sérénité</em>
-        </h1>
+        <div class="hero-cpam-badge">Agréé CPAM Île-de-France</div>
+        <h1 class="hero-h1">Votre taxi conventionné pour vos trajets médicaux en toute sérénité</h1>
         <p class="hero-p">Transport médical professionnel, ponctuel et confortable. Spécialisé dans les trajets conventionnés CPAM vers hôpitaux, cliniques et centres de soins en Île-de-France.</p>
-        <div class="hero-cta">
-          <a href="tel:0623899504" class="btn btn-gold">📞 Appeler maintenant</a>
+        <div class="hero-btns">
+          <a href="tel:0623899504" class="btn btn-olive">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .34h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Appeler maintenant
+          </a>
           <a href="#reservation" class="btn btn-outline">Réserver en ligne</a>
         </div>
         <div class="hero-trust">
-          <div class="trust-item">
-            <span class="trust-icon">🕐</span>
-            <span class="trust-txt">Ponctualité<br>garantie</span>
+          <div class="h-trust-item">
+            <div class="h-trust-ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="h-trust-txt">Ponctualité garantie</span>
           </div>
-          <div class="trust-item">
-            <span class="trust-icon">🛡️</span>
-            <span class="trust-txt">Service<br>sécurisé</span>
+          <div class="h-trust-item">
+            <div class="h-trust-ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="h-trust-txt">Service sécurisé</span>
           </div>
-          <div class="trust-item">
-            <span class="trust-icon">❤️</span>
-            <span class="trust-txt">Accompagnement<br>humain</span>
+          <div class="h-trust-item">
+            <div class="h-trust-ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <span class="h-trust-txt">Accompagnement humain</span>
           </div>
         </div>
       </div>
 
-      <!-- Right – voiture -->
       <div class="hero-right">
-        <div class="hero-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900&q=85&auto=format&fit=crop"
-            alt="Berline premium ITINIUM"
-            loading="eager"
-          />
+        <div class="hero-photo">
+          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80&auto=format&fit=crop" alt="Taxi ITINIUM – berline BMW noire"/>
         </div>
-        <div class="hero-stat-pill">
-          <span class="stat-big">25+</span>
-          <span class="stat-lbl">Années<br>d'expérience</span>
+        <div class="hero-exp-badge">
+          <span class="exp-num">25+</span>
+          <span class="exp-lbl">Années d'expérience</span>
         </div>
       </div>
 
@@ -435,63 +496,65 @@
   </div>
 </section>
 
-<!-- ═══ STRIP ═══ -->
-<div class="strip">
-  <div class="wrap">
-    <div class="strip-in">
-      <div class="s-item"><span class="ico">✅</span> Conventionné CPAM</div>
-      <div class="s-item"><span class="ico">🕐</span> Ponctualité garantie</div>
-      <div class="s-item"><span class="ico">📅</span> Service 7j/7</div>
-      <div class="s-item"><span class="ico">♿</span> Adapté PMR</div>
-      <div class="s-item"><span class="ico">🗺️</span> Île-de-France 75–95</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ PRÉSENTATION ═══ -->
-<section id="presentation" class="sec">
+<!-- ══════════════════════
+     PRÉSENTATION
+══════════════════════ -->
+<section id="presentation">
   <div class="wrap">
     <div class="pres-grid">
 
-      <!-- Gauche photo -->
       <div>
         <div class="pres-photo">
-          <img
-            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=85&auto=format&fit=crop"
-            alt="Intérieur voiture ITINIUM"
-          />
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80&auto=format&fit=crop" alt="Intérieur berline ITINIUM"/>
         </div>
         <div class="pres-stats">
-          <div class="pres-stat"><div class="num">4.9/5</div><div class="lbl">Satisfaction</div></div>
-          <div class="pres-stat"><div class="num">500+</div><div class="lbl">Patients</div></div>
-          <div class="pres-stat"><div class="num">75–95</div><div class="lbl">Départements</div></div>
+          <div class="pstat">
+            <svg class="pstat-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span class="pstat-num">4.9/5</span>
+            <span class="pstat-lbl">Satisfaction</span>
+          </div>
+          <div class="pstat">
+            <svg class="pstat-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span class="pstat-num">500+</span>
+            <span class="pstat-lbl">Patients</span>
+          </div>
+          <div class="pstat">
+            <svg class="pstat-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="pstat-num">75–95</span>
+            <span class="pstat-lbl">Départements</span>
+          </div>
         </div>
       </div>
 
-      <!-- Droite texte -->
       <div class="pres-text">
-        <div class="badge">À votre service</div>
-        <h2 class="sec-title">Un chauffeur expérimenté à votre écoute</h2>
-        <p>Avec plus de 25 ans d'expérience dans le transport de personnes, je mets mon expertise et mon professionnalisme au service de vos déplacements de santé en toute sécurité.</p>
-        <p style="color:var(--gray);font-size:.93rem;margin-top:8px;">Spécialisé dans le transport de personnes à mobilité réduite et les trajets médicaux réguliers, je connais parfaitement l'Île-de-France et ses établissements de santé. Mon objectif : vous offrir un service ponctuel, discret et confortable pour que vous puissiez vous concentrer sur votre bien-être.</p>
-        <div class="feat-list" style="margin-top:28px;">
-          <div class="feat-item">
-            <div class="feat-icon">🕐</div>
-            <div class="feat-body">
+        <div class="label">À votre service</div>
+        <h2>Un chauffeur expérimenté à votre écoute</h2>
+        <p style="margin-top:14px;">Avec plus de 25 ans d'expérience dans le transport de personnes, je mets mon expertise et mon professionnalisme au service de vos déplacements de santé en toute sécurité.</p>
+        <p>Spécialisé dans le transport de personnes à mobilité réduite et les trajets médicaux réguliers, je connais parfaitement l'Île-de-France et ses établissements de santé. Mon objectif : vous offrir un service ponctuel, discret et confortable pour que vous puissiez vous concentrer sur votre bien-être.</p>
+        <div class="check-list">
+          <div class="check-item">
+            <div class="check-ico">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="check-body">
               <h4>Ponctualité exemplaire</h4>
               <p>Arrivée garantie à l'heure pour vos rendez-vous médicaux</p>
             </div>
           </div>
-          <div class="feat-item">
-            <div class="feat-icon">❤️</div>
-            <div class="feat-body">
+          <div class="check-item">
+            <div class="check-ico">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="check-body">
               <h4>Accompagnement humain</h4>
               <p>Écoute, patience et bienveillance à chaque trajet</p>
             </div>
           </div>
-          <div class="feat-item">
-            <div class="feat-icon">🗺️</div>
-            <div class="feat-body">
+          <div class="check-item">
+            <div class="check-ico">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="check-body">
               <h4>Connaissance du territoire</h4>
               <p>Expertise complète de l'Île-de-France et de ses hôpitaux</p>
             </div>
@@ -503,276 +566,387 @@
   </div>
 </section>
 
-<!-- ═══ SERVICES ═══ -->
-<section id="services" class="sec sec-alt">
+<!-- ══════════════════════
+     SERVICES
+══════════════════════ -->
+<section id="services">
   <div class="wrap">
     <div class="sec-head">
-      <div class="badge">Nos prestations</div>
-      <h2 class="sec-title">Services de transport médical</h2>
-      <p class="sec-sub">Un accompagnement complet pour tous vos déplacements de santé en Île-de-France</p>
+      <div class="label-pill">Nos prestations</div>
+      <h2>Services de transport médical</h2>
+      <p>Un accompagnement complet pour tous vos déplacements de santé en Île-de-France</p>
     </div>
     <div class="srv-grid">
+
       <div class="srv-card">
-        <div class="srv-ico">🏥</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+        </div>
         <h3>Hôpitaux et cliniques</h3>
         <p>Transport vers tous les établissements hospitaliers et cliniques d'Île-de-France</p>
       </div>
+
       <div class="srv-card">
-        <div class="srv-ico">👨‍⚕️</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
         <h3>Consultations médicales</h3>
         <p>Rendez-vous chez médecins, spécialistes et centres de consultation</p>
       </div>
+
       <div class="srv-card">
-        <div class="srv-ico">🔄</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
         <h3>Soins réguliers</h3>
         <p>Trajets récurrents pour dialyse, chimiothérapie, rééducation et autres traitements</p>
       </div>
+
       <div class="srv-card">
-        <div class="srv-ico">🔬</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
         <h3>Examens médicaux</h3>
         <p>IRM, scanner, radiologie, analyses et tous types d'examens de santé</p>
       </div>
+
       <div class="srv-card">
-        <div class="srv-ico">💳</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
         <h3>Transport conventionné CPAM</h3>
         <p>Prise en charge selon prescription médicale et remboursement Sécurité Sociale</p>
       </div>
+
       <div class="srv-card">
-        <div class="srv-ico">♿</div>
+        <div class="srv-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
         <h3>Accompagnement personnalisé</h3>
         <p>Service adapté aux personnes à mobilité réduite avec aide à l'embarquement</p>
       </div>
+
     </div>
+
     <div class="srv-banner">
-      <div>
-        <h3>Service disponible 7j/7</h3>
-        <p>Réservation possible en semaine, week-end et jours fériés. Un service adapté à vos besoins et à vos horaires de soins.</p>
-      </div>
-      <a href="tel:0623899504" class="btn btn-gold">Contactez-nous</a>
+      <h3>Service disponible 7j/7</h3>
+      <p>Réservation possible pour vos trajets médicaux en semaine, week-end et jours fériés. Un service adapté à vos besoins et à vos horaires de soins.</p>
+      <a href="tel:0623899504" class="btn btn-olive">Contactez-nous</a>
     </div>
   </div>
 </section>
 
-<!-- ═══ VÉHICULE ═══ -->
-<section id="vehicule" class="sec">
-  <div class="wrap">
-    <div class="veh-grid">
-
-      <!-- Gauche texte -->
-      <div>
-        <div class="badge">Notre véhicule</div>
-        <h2 class="sec-title">Une berline hybride haut de gamme</h2>
-        <p style="color:var(--gray);margin-top:12px;font-size:.93rem;">Pour votre confort et votre bien-être, nous utilisons un véhicule moderne, écologique et parfaitement adapté aux trajets médicaux.</p>
-        <div class="veh-feats">
-          <div class="veh-feat"><div class="ico">🚗</div><span>Berline premium</span></div>
-          <div class="veh-feat"><div class="ico">🌿</div><span>Hybride silencieux</span></div>
-          <div class="veh-feat"><div class="ico">❄️</div><span>Climatisation</span></div>
-          <div class="veh-feat"><div class="ico">✨</div><span>Propreté irréprochable</span></div>
-          <div class="veh-feat"><div class="ico">🛡️</div><span>Assurance complète</span></div>
-          <div class="veh-feat"><div class="ico">♿</div><span>Adapté aux patients</span></div>
-        </div>
-        <div class="veh-specs">
-          <h3>Caractéristiques du véhicule</h3>
-          <div class="specs">
-            <div class="spec">Berline spacieuse 4 places</div>
-            <div class="spec">Motorisation hybride silencieuse</div>
-            <div class="spec">Sièges en cuir confortables</div>
-            <div class="spec">Climatisation automatique</div>
-            <div class="spec">Suspension adaptée au confort</div>
-            <div class="spec">Accès facilité pour PMR</div>
-            <div class="spec">Entretien régulier et contrôles</div>
-            <div class="spec">Adapté aux longues distances</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Droite photo -->
-      <div class="veh-photo">
-        <img
-          src="https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=800&q=85&auto=format&fit=crop"
-          alt="Berline hybride ITINIUM"
-        />
-        <div class="veh-overlay">
-          <div class="veh-pills">
-            <span class="veh-pill">Berline premium</span>
-            <span class="veh-pill">Hybride</span>
-            <span class="veh-pill">Climatisation</span>
-            <span class="veh-pill">PMR</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ RÉSERVATION ═══ -->
-<section id="reservation" class="sec sec-dark">
-  <div class="wrap">
-    <div class="resa-grid">
-
-      <!-- Gauche info -->
-      <div class="resa-left">
-        <div class="badge">Réservation</div>
-        <h2 class="sec-title">Réservez votre transport médical</h2>
-        <p class="sec-sub">Remplissez le formulaire ci-dessous ou appelez-nous directement pour une réservation immédiate.</p>
-        <div class="tel-box">
-          <span class="phone-ico">📞</span>
-          <div>
-            <div class="lbl">Appeler maintenant</div>
-            <a href="tel:0623899504" class="num">06 23 89 95 04</a>
-          </div>
-        </div>
-        <div class="resa-steps">
-          <div class="rstep">
-            <div class="rstep-n">1</div>
-            <div>
-              <h4>Vos informations</h4>
-              <p>Nom, prénom et numéro de téléphone</p>
-            </div>
-          </div>
-          <div class="rstep">
-            <div class="rstep-n">2</div>
-            <div>
-              <h4>Date et heure du rendez-vous</h4>
-              <p>Date souhaitée et heure de prise en charge</p>
-            </div>
-          </div>
-          <div class="rstep">
-            <div class="rstep-n">3</div>
-            <div>
-              <h4>Adresses</h4>
-              <p>Adresse de départ et destination</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Droite formulaire -->
-      <div>
-        <div class="form-card">
-          <form id="rform" onsubmit="sendForm(event)">
-            <div class="fsec">1 — Vos informations</div>
-            <div class="frow">
-              <div class="fg"><label>Prénom *</label><input type="text" placeholder="Jean" required /></div>
-              <div class="fg"><label>Nom *</label><input type="text" placeholder="Dupont" required /></div>
-            </div>
-            <div class="fg"><label>Téléphone *</label><input type="tel" placeholder="06 12 34 56 78" required /></div>
-
-            <div class="fsec">2 — Date et heure du rendez-vous</div>
-            <div class="frow">
-              <div class="fg"><label>Date *</label><input type="date" id="fdate" required /></div>
-              <div class="fg"><label>Heure souhaitée *</label><input type="time" required /></div>
-            </div>
-
-            <div class="fsec">3 — Adresses</div>
-            <div class="fg"><label>Adresse de départ *</label><input type="text" placeholder="12 Rue de la République, 75001 Paris" required /></div>
-            <div class="fg"><label>Adresse d'arrivée *</label><input type="text" placeholder="Hôpital Cochin, 75014 Paris" required /></div>
-            <div class="fg"><label>Établissement médical</label><input type="text" placeholder="Hôpital Cochin, service cardiologie" /></div>
-            <div class="fg"><label>Message complémentaire</label><textarea placeholder="Informations complémentaires, besoins particuliers, retour prévu..."></textarea></div>
-
-            <button type="submit" class="f-submit">Envoyer ma demande de réservation</button>
-            <p class="f-note">* Champs obligatoires. Vos données sont traitées de manière confidentielle.</p>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ DOCUMENTS ═══ -->
-<section id="documents" class="sec">
+<!-- ══════════════════════
+     VÉHICULE
+══════════════════════ -->
+<section id="vehicule">
   <div class="wrap">
     <div class="sec-head">
-      <div class="badge">Informations pratiques</div>
-      <h2 class="sec-title">Documents nécessaires</h2>
-      <p class="sec-sub">Pour bénéficier de la prise en charge CPAM, certains documents sont indispensables.</p>
+      <div class="label-pill">Notre véhicule</div>
+      <h2>Une berline hybride haut de gamme</h2>
+      <p>Pour votre confort et votre bien-être, nous utilisons un véhicule moderne, écologique et parfaitement adapté aux trajets médicaux</p>
     </div>
 
-    <div class="doc-grid">
-      <div class="doc-card">
-        <div class="doc-ico">📋</div>
-        <h3>Prescription médicale de transport</h3>
-        <ul>
-          <li>Document obligatoire pour tous les trajets conventionnés CPAM</li>
-          <li>Établie par votre médecin traitant ou spécialiste</li>
-          <li>Doit mentionner le mode de transport prescrit (taxi conventionné)</li>
-          <li>À présenter avant le trajet</li>
-        </ul>
+    <div class="veh-photo">
+      <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=1100&q=80&auto=format&fit=crop" alt="Berline hybride ITINIUM"/>
+    </div>
+
+    <div class="veh-cards">
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <h4>Berline premium</h4>
+          <p>Véhicule confortable et spacieux</p>
+        </div>
       </div>
-      <div class="doc-card">
-        <div class="doc-ico">💳</div>
-        <h3>Carte Vitale</h3>
-        <ul>
-          <li>À jour pour faciliter les démarches de remboursement auprès de l'Assurance Maladie</li>
-        </ul>
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div>
+          <h4>Hybride</h4>
+          <p>Motorisation écologique et silencieuse</p>
+        </div>
       </div>
-      <div class="doc-card">
-        <div class="doc-ico">🪪</div>
-        <h3>Pièce d'identité</h3>
-        <ul>
-          <li>Carte d'identité ou passeport en cours de validité</li>
-        </ul>
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/></svg>
+        </div>
+        <div>
+          <h4>Climatisation</h4>
+          <p>Confort thermique été comme hiver</p>
+        </div>
+      </div>
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div>
+          <h4>Propreté irréprochable</h4>
+          <p>Nettoyage et désinfection quotidiens</p>
+        </div>
+      </div>
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Assurance complète</h4>
+          <p>Couverture maximale pour votre sécurité</p>
+        </div>
+      </div>
+      <div class="veh-card">
+        <div class="veh-card-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h4>Adapté aux patients</h4>
+          <p>Accès facile et sièges confortables</p>
+        </div>
       </div>
     </div>
 
-    <div class="rates-box">
-      <h3>Taux de remboursement</h3>
-      <p class="sub">En fonction de votre situation, le taux de prise en charge par l'Assurance Maladie peut être :</p>
-      <div class="rates-row">
-        <div class="rate-card">
-          <div class="rate-pct">65%</div>
-          <div class="rate-lbl">Taux de remboursement normal</div>
+    <div class="veh-specs-box">
+      <h3>Caractéristiques du véhicule</h3>
+      <div class="specs-grid">
+        <div class="spec-item"><span class="spec-dot"></span>Berline spacieuse 4 places</div>
+        <div class="spec-item"><span class="spec-dot"></span>Motorisation hybride silencieuse</div>
+        <div class="spec-item"><span class="spec-dot"></span>Sièges en cuir confortables</div>
+        <div class="spec-item"><span class="spec-dot"></span>Climatisation automatique</div>
+        <div class="spec-item"><span class="spec-dot"></span>Suspension adaptée au confort</div>
+        <div class="spec-item"><span class="spec-dot"></span>Accès facilité pour PMR</div>
+        <div class="spec-item"><span class="spec-dot"></span>Entretien régulier et contrôles</div>
+        <div class="spec-item"><span class="spec-dot"></span>Adapté aux longues distances</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════
+     RÉSERVATION
+══════════════════════ -->
+<section id="reservation">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label-pill">Réservation</div>
+      <h2>Réservez votre transport médical</h2>
+      <p>Remplissez le formulaire ci-dessous ou appelez-nous directement pour une réservation immédiate</p>
+    </div>
+    <div class="resa-tel-btn-wrap">
+      <a href="tel:0623899504" class="btn btn-olive">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .34h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Appeler maintenant : 06 23 89 95 04
+      </a>
+    </div>
+
+    <div class="form-card">
+      <form id="rform" onsubmit="sendForm(event)">
+
+        <div class="fsec-title">
+          <div class="fsec-num">1</div>
+          Vos informations
         </div>
-        <div class="rate-card">
-          <div class="rate-pct">100%</div>
-          <div class="rate-lbl">En ALD (Affection Longue Durée)</div>
+        <div class="frow">
+          <div class="fg"><label>Prénom *</label><input type="text" placeholder="Jean" required/></div>
+          <div class="fg"><label>Nom *</label><input type="text" placeholder="Dupont" required/></div>
         </div>
-        <div class="rate-card">
-          <div class="rate-pct">100%</div>
-          <div class="rate-lbl">Bénéficiaires CSS (Complémentaire Santé Solidaire)</div>
+        <div class="fg"><label>Téléphone *</label><input type="tel" placeholder="06 12 34 56 78" required/></div>
+
+        <div class="fsec-title">
+          <div class="fsec-num">2</div>
+          Date et heure du rendez-vous
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label>Date *</label>
+            <div class="field-wrap">
+              <span class="field-ico">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <input type="date" id="fdate" class="has-ico" required/>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Heure souhaitée *</label>
+            <div class="field-wrap">
+              <span class="field-ico">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              <input type="time" class="has-ico" required/>
+            </div>
+          </div>
+        </div>
+
+        <div class="fsec-title">
+          <div class="fsec-num">3</div>
+          Adresses
+        </div>
+        <div class="fg">
+          <label>Adresse de départ *</label>
+          <div class="field-wrap">
+            <span class="field-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <input type="text" class="has-ico" placeholder="12 Rue de la République, 75001 Paris" required/>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Adresse d'arrivée *</label>
+          <div class="field-wrap">
+            <span class="field-ico">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <input type="text" class="has-ico" placeholder="Hôpital Cochin, 27 Rue du Faubourg Saint-Jacques, 75014 Paris" required/>
+          </div>
+        </div>
+        <div class="fg"><label>Établissement médical</label><input type="text" placeholder="Hôpital Cochin, service cardiologie"/></div>
+        <div class="fg"><label>Message complémentaire</label><textarea placeholder="Informations complémentaires, besoins particuliers, retour prévu..."></textarea></div>
+
+        <button type="submit" class="f-submit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Envoyer ma demande de réservation
+        </button>
+        <p class="f-note">* Champs obligatoires. Vos données sont traitées de manière confidentielle.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════
+     DOCUMENTS
+══════════════════════ -->
+<section id="documents">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label-pill">Informations pratiques</div>
+      <h2>Documents nécessaires</h2>
+      <p>Pour bénéficier de la prise en charge CPAM, certains documents sont indispensables</p>
+    </div>
+
+    <!-- Grande carte prescription -->
+    <div class="doc-main-card">
+      <div class="doc-main-header">
+        <div class="doc-main-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <h3>Prescription médicale de transport</h3>
+          <p>Document obligatoire pour tous les trajets conventionnés CPAM</p>
+        </div>
+      </div>
+      <div class="doc-checks">
+        <div class="doc-check">
+          <div class="doc-check-ico">
+            <svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          La prescription doit être établie par votre médecin traitant ou spécialiste
+        </div>
+        <div class="doc-check">
+          <div class="doc-check-ico">
+            <svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          Elle doit mentionner le mode de transport prescrit (taxi conventionné)
+        </div>
+        <div class="doc-check">
+          <div class="doc-check-ico">
+            <svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          La prescription doit être présentée avant le trajet
         </div>
       </div>
     </div>
 
-    <div class="info-note">
-      <strong>Bon à savoir :</strong> Pour les trajets de plus de 150 km ou nécessitant un transport en série (au moins 4 transports de plus de 50 km sur 2 mois), une entente préalable de la CPAM est nécessaire. Nous vous accompagnons dans ces démarches.
+    <!-- 2 petites cartes -->
+    <div class="doc-small-grid">
+      <div class="doc-small">
+        <h4>Carte Vitale</h4>
+        <p>À jour pour faciliter les démarches de remboursement auprès de l'Assurance Maladie</p>
+      </div>
+      <div class="doc-small">
+        <h4>Pièce d'identité</h4>
+        <p>Carte d'identité ou passeport en cours de validité</p>
+      </div>
+    </div>
+
+    <!-- Bon à savoir -->
+    <div class="bon-savoir">
+      <div class="bon-savoir-header">
+        <span class="bon-savoir-pill">Bon à savoir</span>
+      </div>
+      <p>Pour les trajets de plus de 150 km ou nécessitant un transport en série (au moins 4 transports de plus de 50 km sur 2 mois), une entente préalable de la CPAM est nécessaire. Nous vous accompagnons dans ces démarches.</p>
+    </div>
+
+    <!-- Taux de remboursement -->
+    <div class="taux-block">
+      <h4>Taux de remboursement</h4>
+      <p style="font-size:.83rem;color:var(--gray);margin-bottom:12px;">En fonction de votre situation, le taux de prise en charge par l'Assurance Maladie peut être :</p>
+      <div class="taux-list">
+        <div class="taux-item"><span class="taux-dot"></span>65% pour un taux de remboursement normal</div>
+        <div class="taux-item"><span class="taux-dot"></span>100% si vous êtes en ALD (Affection Longue Durée)</div>
+        <div class="taux-item"><span class="taux-dot"></span>100% pour les bénéficiaires de la CSS (Complémentaire Santé Solidaire)</div>
+      </div>
     </div>
 
     <div class="doc-cta">
       <p>Des questions sur les documents nécessaires ou la prise en charge ?</p>
-      <a href="tel:0623899504" class="btn btn-gold">Contactez-nous pour plus d'informations</a>
+      <a href="tel:0623899504" class="btn btn-olive">Contactez-nous pour plus d'informations</a>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- ══════════════════════
+     FOOTER
+══════════════════════ -->
 <footer>
   <div class="wrap">
-    <div class="foot-main">
+    <div class="foot-body">
       <div class="foot-grid">
 
         <div class="foot-brand">
-          <div class="flogo">ITINIUM<span>.</span></div>
-          <p>Votre partenaire de confiance pour tous vos déplacements médicaux en Île-de-France. Service conventionné CPAM, disponible 7j/7.</p>
-          <div class="fcontact">
-            <a href="tel:0623899504"><span class="ic">📞</span> 06 23 89 95 04</a>
-            <a href="mailto:trajetsitiniumtaxi@gmail.com"><span class="ic">✉️</span> trajetsitiniumtaxi@gmail.com</a>
-            <a href="#"><span class="ic">📍</span> Île-de-France (60, 75, 93, 95)</a>
+          <div class="foot-logo">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M16 2L30 16L16 30L2 16L16 2Z" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>
+              <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+              <circle cx="16" cy="16" r="2" fill="rgba(255,255,255,0.7)"/>
+            </svg>
+            <div>
+              <div class="flogo-name">ITINIUM</div>
+              <div class="flogo-sub">Conventionnement CPAM</div>
+            </div>
+          </div>
+          <p>Votre partenaire de confiance pour tous vos déplacements médicaux en Île-de-France</p>
+          <div class="foot-avail">
+            <h5>Disponibilité</h5>
+            <div class="foot-avail-items">
+              <div class="foot-avail-item"><span class="avail-dot"></span>7 jours sur 7</div>
+              <div class="foot-avail-item"><span class="avail-dot"></span>Sur réservation</div>
+              <div class="foot-avail-item"><span class="avail-dot"></span>Disponible jours fériés</div>
+            </div>
           </div>
         </div>
 
         <div class="foot-col">
-          <h4>ITINIUM</h4>
-          <div class="fbadge">✅ Conventionnement CPAM</div>
-          <div class="fbadge">📅 Disponibilité 7j/7</div>
-          <div class="fbadge">🕐 Sur réservation</div>
-          <div class="fbadge">📆 Jours fériés inclus</div>
+          <h5>Contact</h5>
+          <div class="foot-contact">
+            <div class="fcontact-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .34h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.72 6.72l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <a href="tel:0623899504">06 23 89 95 04</a>
+            </div>
+            <div class="fcontact-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:trajetsitiniumtaxi@gmail.com">trajetsitiniumtaxi@gmail.com</a>
+            </div>
+            <div class="fcontact-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Service disponible dans toute l'Île-de-France (60, 75, 93, 95)
+            </div>
+          </div>
         </div>
 
         <div class="foot-col">
-          <h4>Nos services</h4>
+          <h5>Nos services</h5>
           <ul>
             <li><a href="#services">Transport conventionné CPAM</a></li>
             <li><a href="#services">Trajets vers hôpitaux</a></li>
@@ -783,10 +957,11 @@
         </div>
 
         <div class="foot-col">
-          <h4>Navigation</h4>
+          <h5>Navigation</h5>
           <ul>
             <li><a href="#accueil">Accueil</a></li>
             <li><a href="#presentation">Présentation</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#vehicule">Véhicule</a></li>
             <li><a href="#reservation">Réservation</a></li>
             <li><a href="#documents">Documents</a></li>
@@ -796,9 +971,11 @@
       </div>
     </div>
     <div class="foot-bottom">
-      © 2026 ITINIUM Transport conventionné CPAM. Tous droits réservés.
-      <a href="#">Mentions légales</a>
-      <a href="#">Politique de confidentialité</a>
+      <span>© 2026 ITINIUM Transport conventionné CPAM. Tous droits réservés.</span>
+      <div class="foot-bottom-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -806,30 +983,17 @@
 <div id="toast">✅ Demande envoyée ! Nous vous contacterons rapidement.</div>
 
 <script>
-  // Date min
-  const fd = document.getElementById('fdate');
-  if(fd) fd.min = new Date().toISOString().split('T')[0];
-
-  // Form
+  document.getElementById('fdate').min = new Date().toISOString().split('T')[0];
   function sendForm(e){
     e.preventDefault();
     const t = document.getElementById('toast');
     t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),4000);
+    setTimeout(()=>t.classList.remove('show'), 4000);
     e.target.reset();
   }
-
-  // Nav active
-  const secs = document.querySelectorAll('section[id]');
-  const links = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll',()=>{
-    let cur='';
-    secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-90) cur=s.id; });
-    links.forEach(a=>{ a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--gold)' : ''; });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navlinks').classList.remove('open'));
   });
-
-  // Close menu on link click
-  links.forEach(a=>a.addEventListener('click',()=>document.getElementById('navlinks').classList.remove('open')));
 </script>
 </body>
 </html>
