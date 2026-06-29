@@ -795,10 +795,10 @@
           Vos informations
         </div>
         <div class="frow">
-          <div class="fg"><label>Prénom *</label><input type="text" placeholder="Jean" required/></div>
-          <div class="fg"><label>Nom *</label><input type="text" placeholder="Dupont" required/></div>
+          <div class="fg"><label>Prénom *</label><input type="text" id="fprenom" placeholder="Jean" required/></div>
+          <div class="fg"><label>Nom *</label><input type="text" id="fnom" placeholder="Dupont" required/></div>
         </div>
-        <div class="fg"><label>Téléphone *</label><input type="tel" placeholder="06 12 34 56 78" required/></div>
+        <div class="fg"><label>Téléphone *</label><input type="tel" id="ftel" placeholder="06 12 34 56 78" required/></div>
 
         <div class="fsec-title">
           <div class="fsec-num">2</div>
@@ -820,7 +820,7 @@
               <span class="field-ico">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </span>
-              <input type="time" class="has-ico" required/>
+              <input type="time" id="fheure" class="has-ico" required/>
             </div>
           </div>
         </div>
@@ -835,7 +835,7 @@
             <span class="field-ico">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </span>
-            <input type="text" class="has-ico" placeholder="12 Rue de la République, 75001 Paris" required/>
+            <input type="text" id="fdepart" class="has-ico" placeholder="12 Rue de la République, 75001 Paris" required/>
           </div>
         </div>
         <div class="fg">
@@ -844,11 +844,11 @@
             <span class="field-ico">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </span>
-            <input type="text" class="has-ico" placeholder="Hôpital Cochin, 27 Rue du Faubourg Saint-Jacques, 75014 Paris" required/>
+            <input type="text" id="farrivee" class="has-ico" placeholder="Hôpital Cochin, 27 Rue du Faubourg Saint-Jacques, 75014 Paris" required/>
           </div>
         </div>
-        <div class="fg"><label>Établissement médical</label><input type="text" placeholder="Hôpital Cochin, service cardiologie"/></div>
-        <div class="fg"><label>Message complémentaire</label><textarea placeholder="Informations complémentaires, besoins particuliers, retour prévu..."></textarea></div>
+        <div class="fg"><label>Établissement médical</label><input type="text" id="fetablissement" placeholder="Hôpital Cochin, service cardiologie"/></div>
+        <div class="fg"><label>Message complémentaire</label><textarea id="fmessage" placeholder="Informations complémentaires, besoins particuliers, retour prévu..."></textarea></div>
 
         <button type="submit" class="f-submit">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1022,11 +1022,58 @@
 
 <script>
   document.getElementById('fdate').min = new Date().toISOString().split('T')[0];
+  const CALLMEBOT_PHONE = '33623899504';
+  const CALLMEBOT_APIKEY = 'VOTRE_CLE_API'; // Remplacer après activation CallMeBot
+
   function sendForm(e){
     e.preventDefault();
+    const prenom   = document.getElementById('fprenom').value.trim();
+    const nom      = document.getElementById('fnom').value.trim();
+    const tel      = document.getElementById('ftel').value.trim();
+    const date     = document.getElementById('fdate').value;
+    const heure    = document.getElementById('fheure').value;
+    const depart   = document.getElementById('fdepart').value.trim();
+    const arrivee  = document.getElementById('farrivee').value.trim();
+    const etab     = document.getElementById('fetablissement').value.trim();
+    const msg      = document.getElementById('fmessage').value.trim();
+
+    // Format date FR
+    let dateLabel = date;
+    if(date){ const d = new Date(date+'T00:00:00'); dateLabel = d.toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}); }
+
+    const texte = [
+      '🚕 NOUVELLE RÉSERVATION ITINIUM',
+      '',
+      '👤 ' + prenom + ' ' + nom,
+      '📞 ' + tel,
+      '',
+      '📅 ' + dateLabel,
+      '⏰ ' + heure.replace(':','h'),
+      '',
+      '🏠 Départ : ' + depart,
+      '🏥 Arrivée : ' + arrivee,
+      etab ? ('🏢 Établissement : ' + etab) : '',
+      msg  ? ('💬 ' + msg) : '',
+    ].filter(l => l !== null && l !== undefined && !(l === '' && texte)).join('%0A');
+
+    // Envoi WhatsApp via CallMeBot (no-cors, déclenche sans attendre réponse)
+    const textEncode = encodeURIComponent([
+      '🚕 NOUVELLE RÉSERVATION ITINIUM',
+      '👤 ' + prenom + ' ' + nom,
+      '📞 ' + tel,
+      '📅 ' + dateLabel + ' à ' + heure.replace(':','h'),
+      '🏠 Départ : ' + depart,
+      '🏥 Arrivée : ' + arrivee,
+      etab ? '🏢 Établissement : ' + etab : '',
+      msg  ? '💬 ' + msg : '',
+    ].filter(Boolean).join('\n'));
+
+    fetch('https://api.callmebot.com/whatsapp.php?phone=' + CALLMEBOT_PHONE + '&text=' + textEncode + '&apikey=' + CALLMEBOT_APIKEY, {mode:'no-cors'})
+      .catch(()=>{}); // silencieux, le message est quand même envoyé
+
     const t = document.getElementById('toast');
     t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'), 4000);
+    setTimeout(()=>t.classList.remove('show'), 5000);
     e.target.reset();
   }
   document.querySelectorAll('.nav-links a').forEach(a => {
