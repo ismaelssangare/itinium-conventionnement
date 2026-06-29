@@ -1041,21 +1041,6 @@
     let dateLabel = date;
     if(date){ const d = new Date(date+'T00:00:00'); dateLabel = d.toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}); }
 
-    const texte = [
-      '🚕 NOUVELLE RÉSERVATION ITINIUM',
-      '',
-      '👤 ' + prenom + ' ' + nom,
-      '📞 ' + tel,
-      '',
-      '📅 ' + dateLabel,
-      '⏰ ' + heure.replace(':','h'),
-      '',
-      '🏠 Départ : ' + depart,
-      '🏥 Arrivée : ' + arrivee,
-      etab ? ('🏢 Établissement : ' + etab) : '',
-      msg  ? ('💬 ' + msg) : '',
-    ].filter(l => l !== null && l !== undefined && !(l === '' && texte)).join('%0A');
-
     // Envoi WhatsApp via CallMeBot (no-cors, déclenche sans attendre réponse)
     const textEncode = encodeURIComponent([
       '🚕 NOUVELLE RÉSERVATION ITINIUM',
