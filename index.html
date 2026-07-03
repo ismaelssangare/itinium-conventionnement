@@ -462,7 +462,7 @@
     .car-outer { position: relative; }
     .car-viewport { overflow: hidden; border-radius: 14px; padding: 6px 0; }
     .car-track { display: flex; gap: 14px; transition: transform 0.85s cubic-bezier(.4,0,.2,1); will-change: transform; }
-    .car-slide { flex-shrink: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.13); }
+    .car-slide { flex-shrink: 0; width: calc((100% - 28px) / 3.3); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.13); }
     .car-slide img { width: 100%; height: auto; display: block; }
     .car-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.92); border: 0.5px solid rgba(0,0,0,.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1B2E58; box-shadow: 0 2px 10px rgba(0,0,0,.15); transition: background .2s; z-index: 2; }
     .car-arrow:hover { background: #fff; }
@@ -1101,33 +1101,6 @@
     e.target.reset();
   }
 
-  (function(){
-    var idx=0, n=5, timer, step=0;
-
-    function setup(){
-      var vp=document.getElementById('carViewport');
-      if(!vp) return 0;
-      var vpW=vp.offsetWidth;
-      var cardW=Math.floor((vpW-14*2)/3.3);
-      document.querySelectorAll('.car-slide').forEach(function(s){ s.style.width=cardW+'px'; });
-      return cardW+14;
-    }
-
-    function update(){
-      if(!step) step=setup();
-      var off=idx*step;
-      document.getElementById('carTrack').style.transform='translateX(-'+off+'px)';
-      document.querySelectorAll('.car-dot').forEach(function(d,i){ d.classList.toggle('car-dot-a',i===idx); });
-    }
-
-    window.carMove=function(dir){ idx=Math.max(0,Math.min(idx+dir,n-1)); update(); reset(); };
-    window.carGo=function(i){ idx=i; update(); reset(); };
-
-    function reset(){ clearInterval(timer); timer=setInterval(function(){ idx=idx>=n-1?0:idx+1; update(); },5000); }
-
-    step=setup(); reset();
-    window.addEventListener('resize',function(){ step=setup(); update(); });
-  })();
 E html>
 <html lang="fr">
 <head>
@@ -1587,20 +1560,6 @@ E html>
     }
 
 
-    /* ── Carrousel véhicule ── */
-    .veh-photo { margin-bottom: 24px; }
-    .car-outer { position: relative; }
-    .car-viewport { overflow: hidden; border-radius: 14px; padding: 6px 0; }
-    .car-track { display: flex; gap: 14px; transition: transform 0.85s cubic-bezier(.4,0,.2,1); will-change: transform; }
-    .car-slide { flex-shrink: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.13); }
-    .car-slide img { width: 100%; height: auto; display: block; }
-    .car-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.92); border: 0.5px solid rgba(0,0,0,.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1B2E58; box-shadow: 0 2px 10px rgba(0,0,0,.15); transition: background .2s; z-index: 2; }
-    .car-arrow:hover { background: #fff; }
-    .car-prev { left: 8px; }
-    .car-next { right: 8px; }
-    .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
-    .car-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: #d1d5db; cursor: pointer; padding: 0; transition: background .3s, transform .3s; }
-    .car-dot-a { background: #8B9A6D; transform: scale(1.35); }
   </style>
 </head>
 <body>
@@ -2230,22 +2189,7 @@ E html>
     setTimeout(()=>t.classList.remove('show'), 5000);
     e.target.reset();
   }
-
-  (function(){
-    var idx=0, n=5, timer, maxOff=0;
-    function getStep(){ var s=document.querySelector('.car-slide'); return s ? s.offsetWidth+14 : 314; }
-    function update(){
-      maxOff=(n-Math.floor(document.getElementById('carViewport').offsetWidth/getStep()))*getStep();
-      var off=Math.min(idx*getStep(), maxOff);
-      document.getElementById('carTrack').style.transform='translateX(-'+off+'px)';
-      document.querySelectorAll('.car-dot').forEach(function(d,i){ d.classList.toggle('car-dot-a',i===idx); });
-    }
-    window.carMove=function(dir){ idx=Math.max(0,Math.min(idx+dir,n-1)); update(); reset(); };
-    window.carGo=function(i){ idx=i; update(); reset(); };
-    function reset(){ clearInterval(timer); timer=setInterval(function(){ idx=idx>=n-1?0:idx+1; update(); },5000); }
-    reset();
-    window.addEventListener('resize', update);
-  })();PE html>
+PE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
@@ -2704,20 +2648,6 @@ E html>
     }
 
 
-    /* ── Carrousel véhicule ── */
-    .veh-photo { margin-bottom: 24px; }
-    .car-outer { position: relative; }
-    .car-viewport { overflow: hidden; border-radius: 14px; padding: 6px 0; }
-    .car-track { display: flex; gap: 14px; transition: transform 0.85s cubic-bezier(.4,0,.2,1); will-change: transform; }
-    .car-slide { flex-shrink: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.13); }
-    .car-slide img { width: 100%; height: auto; display: block; }
-    .car-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.92); border: 0.5px solid rgba(0,0,0,.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1B2E58; box-shadow: 0 2px 10px rgba(0,0,0,.15); transition: background .2s; z-index: 2; }
-    .car-arrow:hover { background: #fff; }
-    .car-prev { left: 8px; }
-    .car-next { right: 8px; }
-    .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
-    .car-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: #d1d5db; cursor: pointer; padding: 0; transition: background .3s, transform .3s; }
-    .car-dot-a { background: #8B9A6D; transform: scale(1.35); }
   </style>
 </head>
 <body>
@@ -3349,22 +3279,28 @@ E html>
   }
 
   // ── Carrousel véhicule ──
-  (function(){
-    var idx = 0, n = 5, timer;
-    function update(){
-      document.getElementById('carTrack').style.transform = 'translateX(-' + idx*100 + '%)';
-      document.querySelectorAll('.car-dot').forEach(function(d,i){
-        d.classList.toggle('car-dot-a', i===idx);
-      });
-    }
-    window.carMove = function(dir){ idx = (idx+dir+n)%n; update(); resetTimer(); };
-    window.carGo   = function(i){  idx = i;              update(); resetTimer(); };
-    function resetTimer(){ clearInterval(timer); timer = setInterval(function(){ idx=(idx+1)%n; update(); }, 5000); }
-    resetTimer();
-  })();
     document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => document.getElementById('navlinks').classList.remove('open'));
   });
+
+  // ── Carrousel véhicule ──
+  (function(){
+    var idx=0, n=5, timer;
+    function getStep(){
+      var s=document.querySelector('#carTrack .car-slide');
+      return s ? s.getBoundingClientRect().width+14 : 310;
+    }
+    function update(){
+      var st=getStep();
+      document.getElementById('carTrack').style.transform='translateX(-'+(idx*st)+'px)';
+      document.querySelectorAll('.car-dot').forEach(function(d,i){d.classList.toggle('car-dot-a',i===idx);});
+    }
+    window.carMove=function(dir){idx=Math.max(0,Math.min(idx+dir,n-1));update();restart();};
+    window.carGo=function(i){idx=i;update();restart();};
+    function restart(){clearInterval(timer);timer=setInterval(function(){idx=idx>=n-1?0:idx+1;update();},5000);}
+    window.addEventListener('load',function(){update();restart();});
+    window.addEventListener('resize',update);
+  })();
 </script>
 
   <!-- ═══════════════ MENTIONS LÉGALES OVERLAY ═══════════════ -->
